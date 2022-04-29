@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa Eletronico</title>
+</head>
+<body>
+    <script>
+
+//VARIAVEIS
+var ex_saque = [];
+var ex_transferencia = [];
+var ex_deposito = [];
+var saldo = 10000.50;
+var senha = 1234;
+
+//INICIO DO PROGRAMA
+var nome = prompt("Por Favor usuário, digite seu Nome para começarmos:")
+		
+		//SAUDAÇÃO
+		function functionSaudacao(){
+			alert("Olá, " + nome[0].toUpperCase() + nome.substring(1) + ". É um prazer ter você por aqui!"); 
+			inicio();
+   }
+
+   		//INICIO DA CAIXA REGISTRADORA.
+		function inicio() {
+
+			var escolha = parseInt(prompt('Selecione uma opção: \n 1.) Saldo \n 2.) Extrato \n 3.) Saque \n 4.) Depósito \n 5.) transferência \n 6.) Sair'));	
+
+			switch(escolha) {
+			case 1:
+				ver_saldo();
+				break;
+			case 2:
+			    ver_extrato();
+				break;
+			case 3:
+				fazer_saque();
+				break;
+			case 4:
+				fazer_deposito();
+				break;
+			case 5:
+				fazer_transferencia();
+				break;
+			case 6:
+				sair();
+				break;
+			default:
+				erro();
+			}
+		}		
+		
+		//SALDO ATUAL DA CONTA
+		function ver_saldo() {
+			i_senha = Number(prompt("Informe a senha para ver saldo:"));
+			if (senha == i_senha){
+			alert('Seu saldo atual é: ' + saldo);
+			inicio();
+		} else {
+			alert("Senha Incorreta. Por favor tente novamente.");
+			ver_saldo();
+		}
+		}
+		
+		//SALDO APÓS OPERAÇÕES
+		function ver_saldo_depois () {
+			alert('Seu saldo atual é: ' + saldo);
+			inicio();
+		}
+		
+		//EXTRATO DA CONTA
+		function ver_extrato() {
+			i_senha = Number(prompt("Informe a senha para ver extrato:"));
+			if (senha == i_senha){
+			alert("Suas trasações anteriores referente a depositos, saques e transferências foram: \n" + ex_saque + "\n" + ex_deposito + "\n" + ex_transferencia);
+			ver_saldo_depois();
+		} else {
+			alert("Senha Incorreta. Por favor tente novamente.");
+			ver_extrato();
+		}
+		}
+		
+		//SACAR DINHEIRO
+		function fazer_saque() {
+			i_senha = Number(prompt("Informe a senha para efeturar saque:"));
+			if (senha == i_senha){
+		var saque = parseFloat(prompt('Qual o valor para saque?'));
+			    
+                if (isNaN(saque) || saque === '') {
+				    alert('Por favor, informe um número:');
+				    fazer_saque();
+			    } else if (saque > saldo || saque <= 0 ){
+				    alert('Operação não autorizada');
+					fazer_saque();
+		        }else{
+				    saldo -= saque;
+					ex_saque.push("\n Data: 23-03-2022 \n Descrição: Saque \n Valor de saque:" + saque + "\n");
+				    ver_saldo_depois();
+				}
+				} else {
+			alert("Senha Incorreta. Por favor tente novamente.");
+			fazer_saque();
+		}
+		}
+		
+		//DEPOSITAR DINHEIRO
+		function fazer_deposito() {
+				i_senha = Number(prompt("Informe a senha para efetuar depósito:"));
+			if (senha == i_senha){
+				var deposito = parseFloat(prompt('Qual o valor para depósito?'));
+				// Not a Number
+				if (isNaN(deposito) || deposito === '') {
+				alert('Por favor, informe um número:');
+				fazer_deposito();
+				} else if (deposito <= 0) {
+				alert('operação não altorizada:');
+				} else {
+				saldo += deposito;
+				ex_deposito.push("\n Data: 23-03-2022 \n Descrição: depósito \n Valor de depósito:" + deposito + "\n");
+				ver_saldo_depois();
+				} 		
+			} else {
+				alert("Senha Incorreta. Por favor tente novamente.");
+				fazer_deposito();
+				}
+		}
+		
+		//TRANSFERIR DINHEIRO
+		function fazer_transferencia() {
+			i_senha = Number(prompt("Informe a senha para efeturar transferência:"));
+			if (senha == i_senha){
+					var transferencia = parseFloat(prompt('Qual o valor para transferência?'));
+					// Not a Number
+					if (isNaN(transferencia) || transferencia === '') {
+						alert('Por favor, informe um número:');
+						fazer_transferencia();
+					} else if (transferencia > saldo || transferencia <= 0){
+							alert('Operação não autorizada');
+							fazer_transferencia();
+					}else {
+						saldo -= transferencia;
+						ex_transferencia.push("\n Data: 23-03-2022 \n Descrição: transferência \n Valor de transferência:" + transferencia + "\n");
+						ver_saldo_depois();
+					}
+			} else {
+				alert("Senha Incorreta. Por favor tente novamente.");
+				fazer_transferencia();
+			}
+		}
+		
+		//MENSAGEM DE ERRO
+		function erro() {
+			alert('Por favor, informe um número entre 1 e 6.');
+			inicio();
+		}
+		
+		//SAIR DA PAGINA
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+
+			alert(nome[0].toUpperCase() + nome.substring(1) + " foi um prazer ter você por aqui!");
+			window.close();
+			} else {
+				inicio();
+			}
+		}
+
+		//CHAMADO DA FUNÇÃO PARA COMEÇAR
+		functionSaudacao();
+
+    </script>
+</body>
+</html>
